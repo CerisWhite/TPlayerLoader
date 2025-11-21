@@ -10,6 +10,9 @@ if (process.argv.length < 3) { console.log("Provide a player file path."); retur
 const SaveData = fs.readFileSync(process.argv[2]);
 if (!fs.existsSync('./Backup')) { fs.mkdirSync('./Backup'); }
 fs.writeFileSync('./Backup/' + Date.now() + '.plr', SaveData);
+const ItemID = JSON.parse(fs.readFileSync('./ItemID.json'));
+const Prefix = JSON.parse(fs.readFileSync('./Prefix.json'));
+
 const Cipher = new RJ(CryptKey, 'cbc');
 const Input = Buffer.from(Cipher.decrypt(SaveData, 128, CryptKey));
 
@@ -109,6 +112,24 @@ function CSReadSInt64() {
 	Offset += 8;
 	return Value;
 }
+function ReadItemID() {
+	const Value = Input.readInt32LE(Offset);
+	Offset += 4;
+	const Item = ItemID.find(x=>x.id == Value);
+	if (Item != undefined) {
+		return Item.name;
+	}
+	return Value;
+}
+function ReadPrefixID() {
+	const Value = Input.readUInt8(Offset);
+	Offset += 1;
+	const Modif = Prefix.find(x=>x.id == Value);
+	if (Modif != undefined) {
+		return Modif.name;
+	}
+	return Value;
+}
 function ParseFile() {
 	Save['Metadata']['Release'] = CSReadSInt32();
 	Save['Metadata']['FormatString'] = CSReadUInt64();
@@ -157,68 +178,68 @@ function ParseFile() {
 		Save['Appearance']['ShoeColor'] = CSReadRGB();
 		let a = 0; while (a < 20) { // "num3"
 			Save['Armor'].push({
-				'ID': CSReadSInt32(),
-				'Prefix': CSReadByte()
+				'ID': ReadItemID(),
+				'Prefix': ReadPrefixID()
 			});
 			a++;
 		}
 		let d = 0; while (d < 10) { // "num4"
 			Save['Dye'].push({
-				'ID': CSReadSInt32(),
-				'Prefix': CSReadByte()
+				'ID': ReadItemID(),
+				'Prefix': ReadPrefixID()
 			});
 			d++;
 		}
 		let i = 0; while (i < 58) { // "num6"
 			// There's unique handling for items above the ID limit but it's exactly the same???'
 			Save['Inventory'].push({
-				'ID': CSReadSInt32(), // "num7"
+				'ID': ReadItemID(), // "num7"
 				'Count': CSReadSInt32(),
-				'Prefix': CSReadByte(),
+				'Prefix': ReadPrefixID(),
 				'Favorite': CSReadBool()
 			});
 			i++;
 		}
 		let m = 0; while (m < 5) { // "num12"
 			Save['MiscEquip'].push({
-				'ID': CSReadSInt32(),
-				'Prefix': CSReadByte(),
+				'ID': ReadItemID(),
+				'Prefix': ReadPrefixID(),
 				'Dye': {
-					'ID': CSReadSInt32(),
-					'Prefix': CSReadByte()
+					'ID': ReadItemID(),
+					'Prefix': ReadPrefixID()
 				}
 			});
 			m++;
 		}
 		let b = 0; while (b < 40) { // "num14"
 			Save['Bank'].push({
-				'ID': CSReadSInt32(),
+				'ID': ReadItemID(),
 				'Count': CSReadSInt32(),
-				'Prefix': CSReadByte()
+				'Prefix': ReadPrefixID()
 			});
 			b++;
 		}
 		let b2 = 0; while (b2 < 40) { // "num15"
 			Save['Bank2'].push({
-				'ID': CSReadSInt32(),
+				'ID': ReadItemID(),
 				'Count': CSReadSInt32(),
-				'Prefix': CSReadByte()
+				'Prefix': ReadPrefixID()
 			});
 			b2++;
 		}
 		let b3 = 0; while (b3 < 40) { // "num18"
 			Save['Bank3'].push({
-				'ID': CSReadSInt32(),
+				'ID': ReadItemID(),
 				'Count': CSReadSInt32(),
-				'Prefix': CSReadByte()
+				'Prefix': ReadPrefixID()
 			});
 			b3++;
 		}
 		let b4 = 0; while (b4 < 40) { // "num19"
 			Save['Bank4'].push({
-				'ID': CSReadSInt32(),
+				'ID': ReadItemID(),
 				'Count': CSReadSInt32(),
-				'Prefix': CSReadByte(),
+				'Prefix': ReadPrefixID(),
 				'Favorite': CSReadBool()
 			});
 			b4++;
@@ -352,6 +373,28 @@ function CSWriteSInt64(Data) {
 	Onset += 8;
 	return;
 }
+function WriteItemID(Data) {
+	const Item = ItemID.find(x => x.name == Data);
+	if (Item != undefined) {
+		Temp.writeInt32LE(Item.id, Onset);
+	}
+	else {
+		Temp.writeInt32LE(Data, Onset);
+	}
+	Onset += 4;
+	return;
+}
+function WritePrefixID(Data) {
+	const Modif = Prefix.find(x => x.name == Data);
+	if (Modif != undefined) {
+		Temp.writeUInt8(Modif.id, Onset);
+	}
+	else {
+		Temp.writeUInt8(Data, Onset);
+	}
+	Onset += 1;
+	return;
+}
 function SerializeFile(NewSave) {
 	CSWriteSInt32(NewSave['Metadata']['Release']);
 	CSWriteUInt64(NewSave['Metadata']['FormatString']);
@@ -394,44 +437,44 @@ function SerializeFile(NewSave) {
 		CSWriteRGB(NewSave['Appearance']['PantsColor']);
 		CSWriteRGB(NewSave['Appearance']['ShoeColor']);
 		for (const x in NewSave['Armor']) {
-			CSWriteSInt32(NewSave['Armor'][x]['ID']);
-			CSWriteByte(NewSave['Armor'][x]['Prefix']);
+			WriteItemID(NewSave['Armor'][x]['ID']);
+			WritePrefixID(NewSave['Armor'][x]['Prefix']);
 		}
 		for (const x in NewSave['Dye']) {
-			CSWriteSInt32(NewSave['Dye'][x]['ID']);
-			CSWriteByte(NewSave['Dye'][x]['Prefix']);
+			WriteItemID(NewSave['Dye'][x]['ID']);
+			WritePrefixID(NewSave['Dye'][x]['Prefix']);
 		}
 		for (const x in NewSave['Inventory']) {
-			CSWriteSInt32(NewSave['Inventory'][x]['ID']);
+			WriteItemID(NewSave['Inventory'][x]['ID']);
 			CSWriteSInt32(NewSave['Inventory'][x]['Count']);
-			CSWriteByte(NewSave['Inventory'][x]['Prefix']);
+			WritePrefixID(NewSave['Inventory'][x]['Prefix']);
 			CSWriteBool(NewSave['Inventory'][x]['Favorite']);
 		}
 		for (const x in NewSave['MiscEquip']) {
-			CSWriteSInt32(NewSave['MiscEquip'][x]['ID']);
-			CSWriteByte(NewSave['MiscEquip'][x]['Prefix']);
-			CSWriteSInt32(NewSave['MiscEquip'][x]['Dye']['ID']);
-			CSWriteByte(NewSave['MiscEquip'][x]['Dye']['Prefix']);
+			WriteItemID(NewSave['MiscEquip'][x]['ID']);
+			WritePrefixID(NewSave['MiscEquip'][x]['Prefix']);
+			WriteItemID(NewSave['MiscEquip'][x]['Dye']['ID']);
+			WritePrefixID(NewSave['MiscEquip'][x]['Dye']['Prefix']);
 		}
 		for (const x in NewSave['Bank']) {
-			CSWriteSInt32(NewSave['Bank'][x]['ID']);
+			WriteItemID(NewSave['Bank'][x]['ID']);
 			CSWriteSInt32(NewSave['Bank'][x]['Count']);
-			CSWriteByte(NewSave['Bank'][x]['Prefix']);
+			WritePrefixID(NewSave['Bank'][x]['Prefix']);
 		}
 		for (const x in NewSave['Bank2']) {
-			CSWriteSInt32(NewSave['Bank2'][x]['ID']);
+			WriteItemID(NewSave['Bank2'][x]['ID']);
 			CSWriteSInt32(NewSave['Bank2'][x]['Count']);
-			CSWriteByte(NewSave['Bank2'][x]['Prefix']);
+			WritePrefixID(NewSave['Bank2'][x]['Prefix']);
 		}
 		for (const x in NewSave['Bank3']) {
-			CSWriteSInt32(NewSave['Bank3'][x]['ID']);
+			WriteItemID(NewSave['Bank3'][x]['ID']);
 			CSWriteSInt32(NewSave['Bank3'][x]['Count']);
-			CSWriteByte(NewSave['Bank3'][x]['Prefix']);
+			WritePrefixID(NewSave['Bank3'][x]['Prefix']);
 		}
 		for (const x in NewSave['Bank4']) {
-			CSWriteSInt32(NewSave['Bank4'][x]['ID']);
+			WriteItemID(NewSave['Bank4'][x]['ID']);
 			CSWriteSInt32(NewSave['Bank4'][x]['Count']);
-			CSWriteByte(NewSave['Bank4'][x]['Prefix']);
+			WritePrefixID(NewSave['Bank4'][x]['Prefix']);
 			CSWriteBool(NewSave['Inventory'][x]['Favorite']);
 		}
 		CSWriteByte(NewSave['VoidVaultInfo']);

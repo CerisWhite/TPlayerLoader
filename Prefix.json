@@ -1,0 +1,346 @@
+[
+  {
+    "name": "Large",
+    "id": 1
+  },
+  {
+    "name": "Massive",
+    "id": 2
+  },
+  {
+    "name": "Dangerous",
+    "id": 3
+  },
+  {
+    "name": "Savage",
+    "id": 4
+  },
+  {
+    "name": "Sharp",
+    "id": 5
+  },
+  {
+    "name": "Pointy",
+    "id": 6
+  },
+  {
+    "name": "Tiny",
+    "id": 7
+  },
+  {
+    "name": "Terrible",
+    "id": 8
+  },
+  {
+    "name": "Small",
+    "id": 9
+  },
+  {
+    "name": "Dull",
+    "id": 10
+  },
+  {
+    "name": "Unhappy",
+    "id": 11
+  },
+  {
+    "name": "Bulky",
+    "id": 12
+  },
+  {
+    "name": "Shameful",
+    "id": 13
+  },
+  {
+    "name": "Heavy",
+    "id": 14
+  },
+  {
+    "name": "Light",
+    "id": 15
+  },
+  {
+    "name": "Sighted",
+    "id": 16
+  },
+  {
+    "name": "Rapid",
+    "id": 17
+  },
+  {
+    "name": "Hasty",
+    "id": 18
+  },
+  {
+    "name": "Intimidating",
+    "id": 19
+  },
+  {
+    "name": "Deadly",
+    "id": 20
+  },
+  {
+    "name": "Staunch",
+    "id": 21
+  },
+  {
+    "name": "Awful",
+    "id": 22
+  },
+  {
+    "name": "Lethargic",
+    "id": 23
+  },
+  {
+    "name": "Awkward",
+    "id": 24
+  },
+  {
+    "name": "Powerful",
+    "id": 25
+  },
+  {
+    "name": "Mystic",
+    "id": 26
+  },
+  {
+    "name": "Adept",
+    "id": 27
+  },
+  {
+    "name": "Masterful",
+    "id": 28
+  },
+  {
+    "name": "Inept",
+    "id": 29
+  },
+  {
+    "name": "Ignorant",
+    "id": 30
+  },
+  {
+    "name": "Deranged",
+    "id": 31
+  },
+  {
+    "name": "Intense",
+    "id": 32
+  },
+  {
+    "name": "Taboo",
+    "id": 33
+  },
+  {
+    "name": "Celestial",
+    "id": 34
+  },
+  {
+    "name": "Furious",
+    "id": 35
+  },
+  {
+    "name": "Keen",
+    "id": 36
+  },
+  {
+    "name": "Superior",
+    "id": 37
+  },
+  {
+    "name": "Forceful",
+    "id": 38
+  },
+  {
+    "name": "Broken",
+    "id": 39
+  },
+  {
+    "name": "Damaged",
+    "id": 40
+  },
+  {
+    "name": "Shoddy",
+    "id": 41
+  },
+  {
+    "name": "Quick",
+    "id": 42
+  },
+  {
+    "name": "Deadly2",
+    "id": 43
+  },
+  {
+    "name": "Agile",
+    "id": 44
+  },
+  {
+    "name": "Nimble",
+    "id": 45
+  },
+  {
+    "name": "Murderous",
+    "id": 46
+  },
+  {
+    "name": "Slow",
+    "id": 47
+  },
+  {
+    "name": "Sluggish",
+    "id": 48
+  },
+  {
+    "name": "Lazy",
+    "id": 49
+  },
+  {
+    "name": "Annoying",
+    "id": 50
+  },
+  {
+    "name": "Nasty",
+    "id": 51
+  },
+  {
+    "name": "Manic",
+    "id": 52
+  },
+  {
+    "name": "Hurtful",
+    "id": 53
+  },
+  {
+    "name": "Strong",
+    "id": 54
+  },
+  {
+    "name": "Unpleasant",
+    "id": 55
+  },
+  {
+    "name": "Weak",
+    "id": 56
+  },
+  {
+    "name": "Ruthless",
+    "id": 57
+  },
+  {
+    "name": "Frenzying",
+    "id": 58
+  },
+  {
+    "name": "Godly",
+    "id": 59
+  },
+  {
+    "name": "Demonic",
+    "id": 60
+  },
+  {
+    "name": "Zealous",
+    "id": 61
+  },
+  {
+    "name": "Hard",
+    "id": 62
+  },
+  {
+    "name": "Guarding",
+    "id": 63
+  },
+  {
+    "name": "Armored",
+    "id": 64
+  },
+  {
+    "name": "Warding",
+    "id": 65
+  },
+  {
+    "name": "Arcane",
+    "id": 66
+  },
+  {
+    "name": "Precise",
+    "id": 67
+  },
+  {
+    "name": "Lucky",
+    "id": 68
+  },
+  {
+    "name": "Jagged",
+    "id": 69
+  },
+  {
+    "name": "Spiked",
+    "id": 70
+  },
+  {
+    "name": "Angry",
+    "id": 71
+  },
+  {
+    "name": "Menacing",
+    "id": 72
+  },
+  {
+    "name": "Brisk",
+    "id": 73
+  },
+  {
+    "name": "Fleeting",
+    "id": 74
+  },
+  {
+    "name": "Hasty2",
+    "id": 75
+  },
+  {
+    "name": "Quick2",
+    "id": 76
+  },
+  {
+    "name": "Wild",
+    "id": 77
+  },
+  {
+    "name": "Rash",
+    "id": 78
+  },
+  {
+    "name": "Intrepid",
+    "id": 79
+  },
+  {
+    "name": "Violent",
+    "id": 80
+  },
+  {
+    "name": "Legendary",
+    "id": 81
+  },
+  {
+    "name": "Unreal",
+    "id": 82
+  },
+  {
+    "name": "Mythical",
+    "id": 83
+  },
+  {
+    "name": "Legendary2",
+    "id": 84
+  },
+  {
+    "name": "public static readonly int Count",
+    "id": 85
+  },
+  {
+    "name": "",
+    "id": null
+  }
+]
