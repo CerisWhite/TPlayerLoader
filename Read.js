@@ -142,7 +142,7 @@ function ParseFile() {
 	if ( ((Save['Metadata']['FormatString']>>56n) & 0xFFn) != 3) { console.log("Not a player file!"); }
 	// --------------------------
 
-	if (Save['Metadata']['Release'] == 279) {
+	if (Save['Metadata']['Release'] >= 279) {
 		Save['Data']['Difficulty'] = CSReadByte();
 		Save['Data']['PlayTime'] = CSReadSInt64();
 		Save['Appearance']['Hair'] = CSReadSInt32();
@@ -402,7 +402,7 @@ function SerializeFile(NewSave) {
 	CSWriteUInt64(NewSave['Metadata']['IsFavorite']);
 	CSWriteString(NewSave['Data']['Name']);
 	
-	if (NewSave['Metadata']['Release'] == 279) {
+	if (NewSave['Metadata']['Release'] >= 279) {
 		CSWriteByte(NewSave['Data']['Difficulty']);
 		CSWriteSInt64(NewSave['Data']['PlayTime']);
 		CSWriteSInt32(NewSave['Appearance']['Hair']);
